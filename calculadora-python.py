@@ -1,63 +1,80 @@
-# Funções para realizar as operações
-def somar(a, b):
-    return a + b
+import tkinter as tk
+from tkinter import messagebox
 
-def subtrair(a, b):
-    return a - b
+# Funções para as operações
+def somar():
+    try:
+        num1 = float(entry_num1.get())
+        num2 = float(entry_num2.get())
+        resultado = num1 + num2
+        label_resultado.config(text=f"Resultado: {resultado}")
+    except ValueError:
+        messagebox.showerror("Entrada inválida", "Por favor, insira números válidos.")
 
-def multiplicar(a, b):
-    return a * b
+def subtrair():
+    try:
+        num1 = float(entry_num1.get())
+        num2 = float(entry_num2.get())
+        resultado = num1 - num2
+        label_resultado.config(text=f"Resultado: {resultado}")
+    except ValueError:
+        messagebox.showerror("Entrada inválida", "Por favor, insira números válidos.")
 
-def dividir(a, b):
-    if b != 0:
-        return a / b
-    else:
-        return "Erro: Divisão por zero não permitida"
+def multiplicar():
+    try:
+        num1 = float(entry_num1.get())
+        num2 = float(entry_num2.get())
+        resultado = num1 * num2
+        label_resultado.config(text=f"Resultado: {resultado}")
+    except ValueError:
+        messagebox.showerror("Entrada inválida", "Por favor, insira números válidos.")
 
-# Função principal que solicita ao usuário escolher a operação e dois números
-def main():
-    print("Calculadora Simples")
+def dividir():
+    try:
+        num1 = float(entry_num1.get())
+        num2 = float(entry_num2.get())
+        if num2 == 0:
+            messagebox.showerror("Erro", "Divisão por zero não permitida.")
+        else:
+            resultado = num1 / num2
+            label_resultado.config(text=f"Resultado: {resultado}")
+    except ValueError:
+        messagebox.showerror("Entrada inválida", "Por favor, insira números válidos.")
 
-    while True:  # Laço infinito para continuar pedindo cálculos
-        # Exibe o menu de operações
-        print("\nEscolha uma operação:")
-        print("1. Soma")
-        print("2. Subtração")
-        print("3. Multiplicação")
-        print("4. Divisão")
-        print("5. Sair")
-        
-        try:
-            operacao = int(input("Digite o número da operação desejada: "))
-            
-            if operacao == 5:
-                print("Obrigado por usar a calculadora!")
-                break  # Sai do laço se o usuário escolher sair
+# Configuração da janela principal
+root = tk.Tk()
+root.title("Calculadora Simples")
 
-            # Solicita os números
-            num1 = float(input("Digite o primeiro número: "))
-            num2 = float(input("Digite o segundo número: "))
-            
-            # Realiza a operação escolhida
-            if operacao == 1:
-                resultado = somar(num1, num2)
-            elif operacao == 2:
-                resultado = subtrair(num1, num2)
-            elif operacao == 3:
-                resultado = multiplicar(num1, num2)
-            elif operacao == 4:
-                resultado = dividir(num1, num2)
-            else:
-                print("Opção inválida! Tente novamente.")
-                continue  # Se a opção for inválida, repete o laço
+# Configuração da interface
+label_num1 = tk.Label(root, text="Primeiro número:")
+label_num1.grid(row=0, column=0)
 
-            # Exibe o resultado
-            print(f"O resultado da operação é: {resultado}")
-        
-        except ValueError:
-            print("Por favor, digite apenas números válidos.")
-        
+entry_num1 = tk.Entry(root)
+entry_num1.grid(row=0, column=1)
 
-# Chamando a função principal
-if __name__ == "__main__":
-    main()
+label_num2 = tk.Label(root, text="Segundo número:")
+label_num2.grid(row=1, column=0)
+
+entry_num2 = tk.Entry(root)
+entry_num2.grid(row=1, column=1)
+
+# Botões de operação
+botao_somar = tk.Button(root, text="Somar", command=somar)
+botao_somar.grid(row=2, column=0)
+
+botao_subtrair = tk.Button(root, text="Subtrair", command=subtrair)
+botao_subtrair.grid(row=2, column=1)
+
+botao_multiplicar = tk.Button(root, text="Multiplicar", command=multiplicar)
+botao_multiplicar.grid(row=3, column=0)
+
+botao_dividir = tk.Button(root, text="Dividir", command=dividir)
+botao_dividir.grid(row=3, column=1)
+
+# Label para mostrar o resultado
+label_resultado = tk.Label(root, text="Resultado: ")
+label_resultado.grid(row=4, column=0, columnspan=2)
+
+# Iniciar a interface
+root.mainloop()
+
